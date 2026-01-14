@@ -1,0 +1,5 @@
+aws_region        = "sa-east-1"
+cluster_name      = "meu-eks-cluster"
+environment       = "dev"
+app_image_tag     = "v1.0.0"
+route53_zone_name = "meu-dominio.com.br"
