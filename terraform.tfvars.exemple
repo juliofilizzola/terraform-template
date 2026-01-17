@@ -1,4 +1,4 @@
-aws_region        = "sa-east-1"
+aws_region        = "us-east-1"
 cluster_name      = "meu-eks-cluster"
 environment       = "dev"
 app_image_tag     = "v1.0.0"
