@@ -6,6 +6,50 @@ data "aws_eks_cluster_auth" "cluster" {
   name = module.eks.cluster_id
 }
 
+provider "aws" {
+  region = var.aws_region
+
+  default_tags {
+    tags = {
+      ManagedBy   = "Terraform"
+      Environment = var.environment
+      Project     = var.cluster_name
+    }
+  }
+}
+
+
+data "aws_availability_zones" "available" {
+  filter {
+    name   = "opt-in-status"
+    values = ["opt-in-not-required"]
+  }
+}
+
+
+resource "aws_security_group" "securityGroup" {
+  name =  "securitygroup"
+  description =  "Permitir acesso HTTP e acesso a internet"
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0"]
+  }
+
+  egress  {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = [ "0.0.0.0/0"]
+  }
+
+}
+
+
+
+
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   token                  = data.aws_eks_cluster_auth.cluster.token
