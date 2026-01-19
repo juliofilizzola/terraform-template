@@ -1,5 +1,8 @@
 # Terraform Template
 
+<img width="1536" height="1024" alt="Terraform logo" src="https://github.com/user-attachments/assets/f220bb2e-bb3d-491c-8d3c-5b6bf51f6437" />
+
+
 Este repositório fornece um template básico para iniciar projetos com Terraform, incluindo exemplos de configuração de provedores, variáveis e manifestos Kubernetes.
 
 ## 📁 Estrutura do Projeto
