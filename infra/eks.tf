@@ -1,22 +1,28 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.0" # Latest compatível com AWS provider 6.x
+  version = "~> 21.0"
 
-  cluster_name    = var.cluster_name
-  cluster_version = "1.33"
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
-
-  eks_managed_node_groups = {
-    general = {
-      min_size     = 1
-      max_size     = 3
-      desired_size = 2
-
-      instance_types = ["m5.large"]
-      capacity_type  = "ON_DEMAND"
+  name = var.cluster_name
+  kubernetes_version = var.kubernetes_version
+  addons = {
+    coredns = {
+      enabled = true
+    }
+    kube-proxy = {
+      enabled = true
+    }
+    vpc-cni = {
+      enabled = true
     }
   }
 
-  enable_irsa = true
+
+  endpoint_public_access = true
+
+  enable_cluster_createro_admin_permissions = true
+
+  vpc_id     = var.vpc_id
+  subnet_ids = var.subnet_ids
+  controler_plane_subnert_ids = var.subnet_ids
+
 }

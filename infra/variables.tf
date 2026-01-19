@@ -30,3 +30,9 @@ variable "app_image_tag" {
 variable "namespace" {
   type = string
 }
+
+variable "kubernetes_version" {}
+
+variable "vpc_id" {}
+
+variable "subnet_ids" {}
