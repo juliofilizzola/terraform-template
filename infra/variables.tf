@@ -25,3 +25,8 @@ variable "app_image_tag" {
   type        = string
   default     = "v1.0.0"
 }
+
+
+variable "namespace" {
+  type = string
+}
