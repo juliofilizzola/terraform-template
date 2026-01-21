@@ -1,9 +1,6 @@
-module "prod" {
+module "infra" {
   source = "../../infra"
-  app_image_tag = "${var.app_image_tag}"
-  cluster_name  = "${var.cluster_name}"
-  environment   = "${var.environment}"
-  namespace     = "${var.namespace}"
+  aws_region       = "${var.aws_region}"
+  cluster_name = "${var.cluster_name}"
   route53_zone_name = "${var.route53_zone_name}"
-  aws_region    = "${var.aws_region}"
 }

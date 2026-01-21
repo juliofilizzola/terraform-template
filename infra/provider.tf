@@ -1,3 +1,23 @@
+provider "aws" {
+  region = var.aws_region
+
+  default_tags {
+    tags = {
+      ManagedBy   = "Terraform"
+      Environment = var.environment
+      Project     = var.cluster_name
+    }
+  }
+}
+
+resource "aws_instance" "aws_example" {
+  tags = {
+    Name = "ExampleInstance" # Tag the instance with a Name tag for easier identification
+  }
+  ami           = "ami-xxxxxxxx"         # Substitua pelo ID da AMI desejada
+  instance_type = "t3.micro"
+}
+
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_id
 }

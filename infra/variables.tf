@@ -4,6 +4,7 @@ variable "aws_region" {
   default     = "sa-east-1"
 }
 
+
 variable "route53_zone_name" {
   description = "Nome da zona privada do Route 53"
   type        = string
@@ -17,7 +18,7 @@ variable "cluster_name" {
 variable "environment" {
   description = "Ambiente (dev/prod)"
   type        = string
-  default     = "dev"
+  default     = "prod"
 }
 
 variable "app_image_tag" {
@@ -25,14 +26,3 @@ variable "app_image_tag" {
   type        = string
   default     = "v1.0.0"
 }
-
-
-variable "namespace" {
-  type = string
-}
-
-variable "kubernetes_version" {}
-
-variable "vpc_id" {}
-
-variable "subnet_ids" {}
