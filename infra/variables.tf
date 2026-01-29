@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "Região AWS"
   type        = string
-  default     = "sa-east-1"
+  default     = "us-east-1"
 }
 
 variable "route53_zone_name" {
