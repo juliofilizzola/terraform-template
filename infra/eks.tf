@@ -1,6 +1,6 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 20.0" # Latest compatível com AWS provider 6.x
+  version = "~> 20.0"
 
   cluster_name    = var.cluster_name
   cluster_version = "1.33"
@@ -13,7 +13,7 @@ module "eks" {
       max_size     = 3
       desired_size = 2
 
-      instance_types = ["m5.large"]
+      instance_types = ["t3.medium"]
       capacity_type  = "ON_DEMAND"
     }
   }
