@@ -1,23 +1,32 @@
 .PHONY: run-prod run-staging destroy-prod destroy-staging
 
-run-prod:
-	terraform -chdir=infra/prod init
-	terraform -chdir=infra/prod apply -auto-approve
 
-run-staging:
-	terraform -chdir=infra/staging init
-	terraform -chdir=infra/staging apply -auto-approve
+INIT-DEV:
+	cd environments/dev && terraform init
 
-destroy-prod:
-	terraform -chdir=infra/prod destroy -auto-approve
+INIT-PROD:
+	cd environments/prod && terraform init
 
-destroy-staging:
-	terraform -chdir=infra/staging destroy -auto-approve
+INIT-STAGING:
+	cd environments/staging && terraform init
 
-plan-prod:
-	terraform -chdir=infra/prod init
-	terraform -chdir=infra/prod plan
 
-plan-staging:
-	terraform -chdir=infra/staging init
-	terraform -chdir=infra/staging plan
+PLAN-DEV:
+	cd environments/dev && terraform plan
+
+PLAN-PROD:
+	cd environments/prod && terraform plan
+
+PLAN-STAGING:
+	cd environments/staging && terraform plan
+
+
+APPLY-DEV:
+	cd environments/dev && terraform apply -auto-approve
+
+APPLY-PROD:
+	cd environments/prod && terraform apply -auto-approve
+
+APPLY-STAGING:
+	cd environments/staging && terraform apply -auto-approve
+

@@ -1,4 +1,4 @@
-module "prod" {
+module "dev" {
   source = "../../infra"
   app_image_tag = var.app_image_tag
   cluster_name  = var.cluster_name
