@@ -1,7 +1,6 @@
 # Terraform Template
 
-<img width="1390" height="668" alt="image" src="https://github.com/user-attachments/assets/ca678462-0054-477e-b971-c599fc5f0db3" />
-
+<img width="1000" height="358" alt="image" src="https://github.com/user-attachments/assets/ca678462-0054-477e-b971-c599fc5f0db3" />
 
 Este repositório fornece um template básico para iniciar projetos com Terraform, incluindo exemplos de configuração de provedores, variáveis e manifestos Kubernetes.
 
@@ -9,10 +8,12 @@ Este repositório fornece um template básico para iniciar projetos com Terrafor
 
 ```
 terraform-template/
-├── app.yaml
 ├── README.md
 ├── terraform.tfvars.exemple
 ├── environments/
+│   ├── dev/
+│   │   ├── main.tf
+│   │   └── variables.tf
 │   ├── prod/
 │   │   ├── main.tf
 │   │   └── variables.tf
@@ -21,13 +22,12 @@ terraform-template/
 │       └── variables.tf
 ├── infra/
 │   ├── eks.tf
-│   ├── ks8.tf
+│   ├── kubernates.tf
 │   ├── main.tf
 │   ├── outputs.tf
 │   ├── provider.tf
-│   ├── S3.tf
 │   ├── variables.tf
-│   └── vpc.tf
+│   ├── vpc.tf
 │   └── modules/
 │       ├── kubernates.tf
 │       └── variables.tf
@@ -36,10 +36,10 @@ terraform-template/
 - `main.tf`: Recursos e módulos principais do Terraform.
 - `provider.tf`: Configuração dos provedores (ex: AWS, Google, Azure).
 - `variables.tf`: Definição das variáveis de entrada.
-- `terraform.tfvars`: Valores atribuídos às variáveis.
+- `terraform.tfvars.exemple`: Exemplo de valores atribuídos às variáveis.
 - `outputs.tf`: Saídas da infraestrutura gerada.
-- `app.yaml`: Exemplo de manifesto Kubernetes em YAML.
 - `modules/`: Módulos reutilizáveis para organização do código.
+- `app.yaml`: Exemplo de manifesto Kubernetes em YAML (adicione se necessário).
 
 ## ✅ Pré-requisitos
 
@@ -55,7 +55,10 @@ terraform-template/
    cd terraform-template
    ```
 
-2. **Gerencie a infraestrutura com o Makefile:**
+2. **Configure as variáveis:**
+   Copie o arquivo `terraform.tfvars.exemple` para `terraform.tfvars` e edite conforme necessário para o seu ambiente.
+
+3. **Gerencie a infraestrutura com o Makefile:**
 
    - Para aplicar a infraestrutura em produção:
      ```sh
@@ -67,84 +70,44 @@ terraform-template/
      make run-staging
      ```
 
-   - Para visualizar o plano de execução em produção:
+   - Para aplicar a infraestrutura em dev:
+     ```sh
+     make run-dev
+     ```
+
+   - Para visualizar o plano de execução:
      ```sh
      make plan-prod
-     ```
-
-   - Para visualizar o plano de execução em staging:
-     ```sh
      make plan-staging
+     make plan-dev
      ```
 
-   - Para destruir a infraestrutura em produção:
+   - Para destruir a infraestrutura:
      ```sh
      make destroy-prod
-     ```
-
-   - Para destruir a infraestrutura em staging:
-     ```sh
      make destroy-staging
+     make destroy-dev
      ```
-
-3. **Configure as variáveis:**
-   Edite o arquivo `terraform.tfvars` conforme necessário para o seu ambiente.
 
 ## 📦 Deploy
 
-Para realizar o deploy, siga os passos abaixo:
-
 1. Certifique-se de que as credenciais do provedor estão configuradas corretamente no ambiente.
-2. Execute os comandos do Terraform na ordem descrita acima.
+2. Execute os comandos do Terraform conforme descrito acima.
 3. Após o `terraform apply`, verifique os recursos criados no provedor de nuvem.
 
 ## 📝 Observações
 
 - Adapte os arquivos conforme as necessidades do seu projeto.
 - Consulte a [documentação oficial do Terraform](https://developer.hashicorp.com/terraform/docs) para mais detalhes.
-- Para manifestos Kubernetes, utilize o arquivo `k8s_manifest.tf` ou importe YAMLs existentes via `app.yaml`.
+- Para manifestos Kubernetes, utilize o arquivo `app.yaml` ou importe YAMLs existentes.
 
 ## 🛠️ Comandos do Makefile
 
-O projeto inclui um `Makefile` para facilitar a execução de tarefas comuns. Aqui estão os comandos disponíveis:
+O projeto inclui um `Makefile` para facilitar a execução de tarefas comuns. Comandos disponíveis:
 
-- **Executar infraestrutura em produção:**
-  ```sh
-  make run-prod
-  ```
-  Inicializa e aplica a infraestrutura no ambiente de produção.
-
-- **Executar infraestrutura em staging:**
-  ```sh
-  make run-staging
-  ```
-  Inicializa e aplica a infraestrutura no ambiente de staging.
-
-- **Destruir infraestrutura em produção:**
-  ```sh
-  make destroy-prod
-  ```
-  Destrói a infraestrutura no ambiente de produção.
-
-- **Destruir infraestrutura em staging:**
-  ```sh
-  make destroy-staging
-  ```
-  Destrói a infraestrutura no ambiente de staging.
-
-- **Planejar infraestrutura em produção:**
-  ```sh
-  make plan-prod
-  ```
-  Gera e exibe o plano de execução para o ambiente de produção.
-
-- **Planejar infraestrutura em staging:**
-  ```sh
-  make plan-staging
-  ```
-  Gera e exibe o plano de execução para o ambiente de staging.
-
-Utilize esses comandos para gerenciar facilmente os ambientes de infraestrutura.
+- `make run-prod` / `make run-staging` / `make run-dev`: Inicializa e aplica a infraestrutura.
+- `make plan-prod` / `make plan-staging` / `make plan-dev`: Gera e exibe o plano de execução.
+- `make destroy-prod` / `make destroy-staging` / `make destroy-dev`: Destrói a infraestrutura.
 
 ## 📚 Referências
 
