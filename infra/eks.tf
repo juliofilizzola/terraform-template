@@ -4,8 +4,10 @@ module "eks" {
 
   cluster_name    = var.cluster_name
   cluster_version = "1.33"
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  vpc_id     = var.vpc_id
+  subnet_ids = var.private_subnets
+
+  public_subnet_ids = var.public_subnets
 
   eks_managed_node_groups = {
     general = {
@@ -15,6 +17,7 @@ module "eks" {
 
       instance_types = ["t3.medium"]
       capacity_type  = "ON_DEMAND"
+      key_name       = var.ssh_key_name
     }
   }
 

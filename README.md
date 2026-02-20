@@ -46,6 +46,7 @@ terraform-template/
 - [Terraform](https://www.terraform.io/downloads.html) **>= 1.0**
 - Conta e credenciais do provedor desejado (ex: AWS, GCP, Azure).
 - Permissões adequadas para criar recursos na nuvem ou cluster Kubernetes.
+- **Uma VPC já existente e subnets criadas** (o template não cria mais a VPC automaticamente).
 
 ## 🚀 Como usar
 
@@ -56,7 +57,12 @@ terraform-template/
    ```
 
 2. **Configure as variáveis:**
-   Copie o arquivo `terraform.tfvars.exemple` para `terraform.tfvars` e edite conforme necessário para o seu ambiente.
+   Copie o arquivo `terraform.tfvars.exemple` para `terraform.tfvars` e edite conforme necessário para o seu ambiente. Agora é obrigatório informar os IDs da VPC e das subnets já existentes:
+   ```hcl
+   vpc_id          = "vpc-xxxxxxxx"
+   private_subnets = ["subnet-aaaaaaa", "subnet-bbbbbbb"]
+   public_subnets  = ["subnet-ccccccc", "subnet-ddddddd"]
+   ```
 
 3. **Gerencie a infraestrutura com o Makefile:**
 
@@ -97,6 +103,7 @@ terraform-template/
 
 ## 📝 Observações
 
+- Agora a VPC e as subnets devem ser criadas previamente e informadas via variáveis.
 - Adapte os arquivos conforme as necessidades do seu projeto.
 - Consulte a [documentação oficial do Terraform](https://developer.hashicorp.com/terraform/docs) para mais detalhes.
 - Para manifestos Kubernetes, utilize o arquivo `app.yaml` ou importe YAMLs existentes.
