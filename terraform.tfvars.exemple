@@ -3,3 +3,11 @@ cluster_name      = "meu-eks-cluster"
 environment       = "dev"
 app_image_tag     = "v1.0.0"
 route53_zone_name = "meu-dominio.com.br"
+
+# IDs da VPC e subnets já existentes
+vpc_id           = "vpc-xxxxxxxx"
+private_subnets  = ["subnet-aaaaaaa", "subnet-bbbbbbb"]
+public_subnets   = ["subnet-ccccccc", "subnet-ddddddd"]
+
+# Nome da chave SSH existente na AWS
+ssh_key_name     = "minha-chave-ssh"
