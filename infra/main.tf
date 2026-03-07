@@ -1,9 +1,11 @@
 data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
+  name = module.eks.cluster_name
+  depends_on = [module.eks]
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
+  name = module.eks.cluster_name
+  depends_on = [module.eks]
 }
 
 data "aws_availability_zones" "available" {
@@ -16,7 +18,7 @@ data "aws_availability_zones" "available" {
 resource "aws_security_group" "eks_workers" {
   name_prefix = "${var.cluster_name}-worker-sg"
   vpc_id      = var.vpc_id
-  description = "EKS BPCode workers + apps"
+  description = "EKS BPTech workers + apps"
 
   ingress {
     description = "Kubernetes API"
@@ -53,3 +55,4 @@ resource "aws_security_group" "eks_workers" {
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
 }
+

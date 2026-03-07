@@ -8,11 +8,8 @@ module "eks" {
   vpc_id                         = var.vpc_id
   subnet_ids                     = var.private_subnets
 
-  cluster_endpoint_public_access       = true
-  cluster_endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
-
-  cluster_endpoint_private_access       = true
-  cluster_endpoint_private_access_cidrs = var.cluster_endpoint_private_access_cidrs
+  cluster_endpoint_public_access  = true
+  cluster_endpoint_private_access = true
 
   cluster_encryption_config = {
     provider = {
@@ -25,21 +22,20 @@ module "eks" {
 
   eks_managed_node_groups = {
     workers = {
-      name                = "bpcode-workers-prod"
+      name                = "bptech-workers-prod"
       use_name_prefix     = false
-      instance_types      = ["t3.large"]
+      instance_types      = ["t3.medium"]
       capacity_type       = "ON_DEMAND"
       min_size            = 3
       max_size            = 3
       desired_size        = 3
       max_unavailable_percentage = 33
-      ami_type            = "AL2_x86_64_STANDARD"
       disk_size           = 50
       disk_type           = "gp3"
       vpc_security_group_ids = [aws_security_group.eks_workers.id]
       labels = {
         tier     = "production"
-        workload = "bpcode-prod"
+        workload = "bptech-prod"
       }
       taints = [{
         key    = "dedicated"
@@ -53,15 +49,9 @@ module "eks" {
   }
 
   cluster_addons = {
-    coredns = {
-      most_recent = true
-    }
-    kube-proxy = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent = true
-    }
+    coredns = { most_recent = true }
+    kube-proxy = { most_recent = true }
+    vpc-cni = { most_recent = true }
   }
 
   enable_irsa = true
@@ -69,6 +59,6 @@ module "eks" {
   tags = merge(var.default_tags, {
     Environment = var.environment
     ClusterType = "pegasus-prod"
-    Purpose     = "BPCode Production Workloads"
+    Purpose     = "BPTech Production Workloads"
   })
 }
