@@ -5,9 +5,8 @@ module "eks" {
   cluster_name    = var.cluster_name
   cluster_version = var.kubernetes_version
 
-  vpc_id                         = var.vpc_id
-  subnet_ids                     = var.private_subnets
-
+  vpc_id     = var.vpc_id
+  subnet_ids = var.private_subnets
   cluster_endpoint_public_access  = true
   cluster_endpoint_private_access = true
 
@@ -16,6 +15,24 @@ module "eks" {
       key_arn = var.kms_key_arn
     }
     resources = ["secrets"]
+  }
+
+
+  enable_irsa = true
+
+  access_entries = {
+    cluster_admin = {
+      principal_arn = data.aws_caller_identity.current.arn
+
+      policy_associations = {
+        admin = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+          access_scope = {
+            type = "cluster"
+          }
+        }
+      }
+    }
   }
 
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
@@ -48,13 +65,11 @@ module "eks" {
     }
   }
 
-  cluster_addons = {
-    coredns = { most_recent = true }
-    kube-proxy = { most_recent = true }
-    vpc-cni = { most_recent = true }
-  }
-
-  enable_irsa = true
+  # cluster_addons = {
+  #   coredns = { most_recent = true }
+  #   kube-proxy = { most_recent = true }
+  #   vpc-cni = { most_recent = true }
+  # }
 
   tags = merge(var.default_tags, {
     Environment = var.environment
