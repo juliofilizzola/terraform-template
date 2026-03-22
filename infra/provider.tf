@@ -6,6 +6,13 @@ terraform {
       version = "~> 5.92"
     }
   }
+  backend "s3" {
+    bucket         = "bptech-terraform-state"
+    key            = "eks/pegasus-prod/terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    dynamodb_table = "terraform-lock-table"
+  }
 }
 
 provider "aws" {
@@ -19,4 +26,3 @@ provider "aws" {
     }
   }
 }
-
