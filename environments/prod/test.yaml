@@ -1,0 +1,23 @@
+# test-lb.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-test
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx  # ajuste se necessário
+  ports:
+    - port: 80
+      targetPort: 80
